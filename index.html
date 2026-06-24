@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Siva Kalyan — Senior Data Engineer</title>
+<meta name="description" content="Siva Kalyan — Senior Data Engineer with 8+ years building scalable data platforms across banking, healthcare, and retail. Snowflake · AWS · GCP · Azure · Spark · Python." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --bg-elevated: #131316;
+    --bg-card: #16161a;
+    --border: #26262c;
+    --border-strong: #34343c;
+    --text: #f5f5f4;
+    --text-muted: #8a8a92;
+    --text-faint: #5c5c64;
+    --accent: #d4a574;
+    --accent-soft: #d4a57418;
+    --accent-bright: #e8c499;
+    --green: #6bbf86;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'Manrope', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ==== NAV ==== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: rgba(11, 11, 12, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-brand::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.25s ease;
+    font-family: var(--mono);
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+    padding: 9px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .nav-cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* ==== HERO ==== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-inner { position: relative; z-index: 1; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s forwards;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-size: clamp(56px, 11vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+  .hero h1 .italic {
+    font-style: italic;
+    font-weight: 300;
+    font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    color: var(--accent);
+  }
+
+  .hero-tagline {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+    font-weight: 300;
+  }
+  .hero-tagline strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-stat {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat-num .suffix {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .hero-stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  @media (max-width: 768px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-stat:nth-child(2) { border-right: none; }
+    .hero-stat:nth-child(1), .hero-stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .hero-stat { padding: 20px 16px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==== SECTION COMMONS ==== */
+  section { padding: 120px 0; position: relative; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 64px;
+    max-width: 900px;
+  }
+  .section-title .italic {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  /* ==== ABOUT ==== */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .about-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-top: 1px solid var(--border-strong);
+    padding-top: 16px;
+  }
+  .about-text p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-text strong {
+    font-weight: 500;
+    color: var(--accent-bright);
+  }
+
+  /* ==== IMPACT ==== */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .impact-grid { grid-template-columns: 1fr; }
+  }
+  .impact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 40px 32px;
+    border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .impact-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 50%, var(--accent-soft) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .impact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+  .impact-card:hover::before { opacity: 1; }
+  .impact-card > * { position: relative; z-index: 1; }
+  .impact-num {
+    font-family: var(--serif);
+    font-size: 88px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .impact-num .unit {
+    font-size: 36px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .impact-headline {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .impact-detail {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ==== EXPERIENCE ==== */
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .exp-item:hover {
+    background: linear-gradient(90deg, var(--accent-soft) 0%, transparent 60%);
+    padding-left: 16px;
+    margin-left: -16px;
+    padding-right: 16px;
+    margin-right: -16px;
+  }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  @media (max-width: 900px) {
+    .exp-item { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .exp-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .exp-current {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+  }
+  .exp-current::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+  .exp-content h3 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .exp-content h3 .role {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .exp-company {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-family: var(--mono);
+  }
+  .exp-summary {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .exp-impacts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .exp-impacts li {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-left: 22px;
+    position: relative;
+  }
+  .exp-impacts li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .exp-impacts li strong {
+    color: var(--accent-bright);
+    font-weight: 600;
+  }
+  .exp-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .exp-tech span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ==== STACK ==== */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 768px) {
+    .stack-grid { grid-template-columns: 1fr; }
+  }
+  .stack-cat {
+    background: var(--bg);
+    padding: 36px 32px;
+    transition: background 0.3s ease;
+  }
+  .stack-cat:hover { background: var(--bg-card); }
+  .stack-cat-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .stack-cat-title .count {
+    color: var(--text-faint);
+    font-size: 10px;
+  }
+  .stack-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stack-item {
+    font-size: 14px;
+    color: var(--text);
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+  .stack-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .stack-item.primary {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-bright);
+  }
+
+  /* ==== CREDS ==== */
+  .creds-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .creds-grid { grid-template-columns: 1fr; }
+  }
+  .cred-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s ease;
+  }
+  .cred-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .cred-type {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .cred-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .cred-issuer {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+
+  /* ==== CONTACT ==== */
+  .contact {
+    padding: 140px 0 80px;
+    text-align: center;
+    position: relative;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .contact h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  .contact h2 .italic {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .contact-sub {
+    font-size: 20px;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto 56px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    transition: all 0.25s ease;
+  }
+  .contact-link.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .contact-link.primary:hover {
+    background: var(--accent-bright);
+    transform: translateY(-2px);
+  }
+  .contact-link:not(.primary):hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  @media (max-width: 600px) {
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">SK · OPEN TO ROLES</div>
+    <ul class="nav-links">
+      <li><a href="#about">01 · About</a></li>
+      <li><a href="#impact">02 · Impact</a></li>
+      <li><a href="#experience">03 · Experience</a></li>
+      <li><a href="#stack">04 · Stack</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get in touch ↗</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container hero-inner">
+    <div class="eyebrow">Senior Data Engineer · Kansas City, MO</div>
+    <h1>
+      Siva <span class="italic">Kalyan</span>.
+    </h1>
+    <p class="hero-tagline">
+      I build <strong>petabyte-scale data platforms</strong> that turn raw transactions into real-time insight — across <strong>Snowflake, AWS, GCP, and Azure</strong>. Eight years shipping production pipelines for Fortune-100 banks, healthcare networks, and global pharma.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">8<span class="suffix">+</span></div>
+        <div class="hero-stat-label">Years Engineering</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5</div>
+        <div class="hero-stat-label">Enterprise Clients</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3<span class="suffix">×</span></div>
+        <div class="hero-stat-label">Cloud Platforms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">2<span class="suffix">×</span></div>
+        <div class="hero-stat-label">Certifications</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">01 · About</div>
+    <h2 class="section-title">Pipelines that <span class="italic">scale</span>, models that <span class="italic">ship</span>.</h2>
+    <div class="about-grid">
+      <div class="about-label">PROFILE</div>
+      <div class="about-text">
+        <p>I'm a Senior Data Engineer with <strong>eight years building and supporting data platforms</strong> in banking, healthcare, IT, and retail. My focus is the unglamorous-but-critical layer: scalable ingestion, governed storage, and feature-ready datasets that downstream ML and analytics teams can actually trust.</p>
+        <p>Most recently at <strong>Discover Financial / Capital One</strong>, I'm leading cloud-modernization for payments and card-transaction systems — migrating on-prem workloads into a hybrid Azure–GCP–Snowflake ecosystem and standing up vectorization pipelines for GenAI and fraud-detection use cases.</p>
+        <p>I'm <strong>SnowPro Core</strong> and <strong>AWS Solutions Architect Associate</strong> certified, fluent in PySpark and Scala, and equally comfortable shipping Terraform for infra as I am writing dbt models for analytics engineers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section id="impact">
+  <div class="container">
+    <div class="section-label">02 · Impact</div>
+    <h2 class="section-title">Numbers that <span class="italic">moved</span>.</h2>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-num">30<span class="unit">%</span></div>
+        <div class="impact-headline">ML training time reduction</div>
+        <div class="impact-detail">Automated feature-engineering pipelines with Spark + Python that compressed model-training cycles by nearly a third, freeing data scientists for higher-leverage work.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-num">60<span class="unit">%</span></div>
+        <div class="impact-headline">Faster ETL turnaround</div>
+        <div class="impact-detail">Rebuilt and automated brittle batch workflows end-to-end — cutting recurring-error resolution and turnaround time by 60% across financial reporting pipelines.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-num">100<span class="unit">%</span></div>
+        <div class="impact-headline">Cloud-migration coverage</div>
+        <div class="impact-detail">Led hybrid migrations from on-prem to Azure–GCP–Snowflake for high-volume batch, near-real-time analytics, and ML feature stores — zero data-loss incidents.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">03 · Experience</div>
+    <h2 class="section-title">Selected <span class="italic">work</span>.</h2>
+
+    <div class="experience-list">
+
+      <article class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-period">MAY 2024 — PRESENT</div>
+          <div class="exp-current">Currently Shipping</div>
+        </div>
+        <div class="exp-content">
+          <h3><span class="role">Sr. Data Engineer</span> · Discover Financial / Capital One</h3>
+          <div class="exp-company">Cloud Modernization · Payments &amp; Card Transactions</div>
+          <p class="exp-summary">Architecting an AI-ready, hybrid-cloud data platform for payments and card-transaction workflows — the backbone for downstream fraud-detection and ML feature systems.</p>
+          <ul class="exp-impacts">
+            <li>Migrated on-prem workloads to a hybrid <strong>Azure + GCP + Snowflake</strong> ecosystem with governed storage layers optimized for ML feature extraction.</li>
+            <li>Built <strong>vectorization pipelines</strong> in Spark/Python generating embeddings for semantic search and RAG-based GenAI applications.</li>
+            <li>Deployed <strong>Spark Streaming</strong> jobs (PySpark/Scala) consuming Kafka topics and writing to HBase + Cassandra for sub-second analytics.</li>
+            <li>Integrated <strong>schema validation, drift detection, and data-quality gates</strong> directly into streaming pipelines — turning silent failures into actionable alerts.</li>
+            <li>Reduced ML model training time by <strong>30%</strong> via automated feature-engineering pipelines.</li>
+          </ul>
+          <div class="exp-tech">
+            <span>Snowflake</span><span>Azure Data Lake</span><span>GCP</span><span>PySpark</span><span>Scala</span><span>Kafka</span><span>Kubernetes</span><span>dbt</span><span>HBase</span><span>Cassandra</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-period">SEP 2023 — APR 2024</div>
+        </div>
+        <div class="exp-content">
+          <h3><span class="role">Data Engineer</span> · Cardinal Health</h3>
+          <div class="exp-company">High-Velocity Ingestion &amp; Real-Time Analytics Platform</div>
+          <p class="exp-summary">Built the ingestion + analytics backbone for pharmaceutical supply-chain and medical-device distribution data — feeding inventory dashboards and compliance reporting.</p>
+          <ul class="exp-impacts">
+            <li>Stood up <strong>near-real-time pipelines</strong> on Flume, Kafka, and Spark Streaming (Scala) for high-velocity inventory events.</li>
+            <li>Designed a <strong>multi-cloud architecture</strong> — GCP for core compute (Dataproc, Compute Engine), Azure for enterprise tooling.</li>
+            <li>Tuned Spark performance via custom partitioned RDDs and rewrote complex Hive SQL into optimized Scala transformations.</li>
+            <li>Designed Fact/Dimensional models (Star &amp; Snowflake schemas) with Parquet-partitioned Hive tables for cost-efficient querying.</li>
+            <li>Built custom <strong>GCP Data Catalog automation</strong> in Python for enterprise-wide metadata governance.</li>
+          </ul>
+          <div class="exp-tech">
+            <span>Spark Streaming</span><span>Scala</span><span>Kafka</span><span>GCP Dataproc</span><span>BigQuery</span><span>Hive</span><span>HBase</span><span>Snowflake</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-period">APR 2022 — JUL 2023</div>
+        </div>
+        <div class="exp-content">
+          <h3><span class="role">Data Engineer</span> · TCS / Sanofi</h3>
+          <div class="exp-company">Scalable AWS Data Lake &amp; Automated ETL Platform</div>
+          <p class="exp-summary">Delivered a high-availability data platform supporting global pharma operations — AWS data lake for storage and processing, BigQuery for analytical reporting.</p>
+          <ul class="exp-impacts">
+            <li>Architected and shipped <strong>HA, scalable data platforms on AWS</strong>, improving reliability and agility for global data ops.</li>
+            <li>Automated ingestion from APIs, S3, Snowflake, Teradata, and Kafka streams — improving data freshness and quality.</li>
+            <li>Implemented <strong>Terraform + CloudFormation IaC</strong> for consistent, repeatable cloud provisioning.</li>
+            <li>Tuned T-SQL, SSIS, SQL Server, and Redshift workloads for measurable query-performance gains.</li>
+            <li>Containerized and deployed applications on <strong>AWS ECS</strong> with full CI/CD pipelines.</li>
+          </ul>
+          <div class="exp-tech">
+            <span>AWS Glue</span><span>Lambda</span><span>Redshift</span><span>Snowflake</span><span>Terraform</span><span>Kafka</span><span>Databricks</span><span>Athena</span><span>Tableau</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-period">JUL 2019 — MAR 2022</div>
+        </div>
+        <div class="exp-content">
+          <h3><span class="role">Data Engineer</span> · OMICS International</h3>
+          <div class="exp-company">Financial Data Analytics &amp; ETL Platform</div>
+          <p class="exp-summary">Owned the end-to-end ingestion, transformation, and analysis of financial and transactional datasets — translating raw data into dashboards and decisions.</p>
+          <ul class="exp-impacts">
+            <li>Cut ETL turnaround time by <strong>60%</strong> by automating workflows and resolving recurring failure modes.</li>
+            <li>Built batch and real-time pipelines in <strong>Python, SQL, and SSIS</strong>; authored Hive UDFs and tuned stored procedures.</li>
+            <li>Supported ML workflows including regression, XGBoost classification, and K-Means/Hierarchical clustering.</li>
+            <li>Shipped Tableau dashboards and Excel reports surfacing KPIs to business stakeholders.</li>
+          </ul>
+          <div class="exp-tech">
+            <span>Python</span><span>Spark</span><span>Hive</span><span>Sqoop</span><span>Kafka</span><span>SSIS</span><span>Tableau</span><span>AWS S3/EMR</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-period">JUL 2017 — JUN 2019</div>
+        </div>
+        <div class="exp-content">
+          <h3><span class="role">Data Engineer</span> · People Tech Group</h3>
+          <div class="exp-company">Financial Data Ingestion on Hadoop</div>
+          <p class="exp-summary">Foundation chapter — building ingestion, transformation, and reporting on large datasets using the Hadoop ecosystem.</p>
+          <ul class="exp-impacts">
+            <li>Ingested CSV/JSON/Parquet/AVRO into HDFS and optimized layout for query performance.</li>
+            <li>Built Hive external tables and Sqoop imports from Oracle, SQL Server, and Teradata.</li>
+            <li>Scheduled and monitored daily ETL via <strong>Oozie</strong>; maintained Spark / Spark-Streaming jobs in Python and Scala.</li>
+          </ul>
+          <div class="exp-tech">
+            <span>Hadoop</span><span>HDFS</span><span>Spark</span><span>Hive</span><span>Sqoop</span><span>Oozie</span><span>AWS S3/EMR</span><span>Teradata</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label">04 · Technical Stack</div>
+    <h2 class="section-title">The <span class="italic">toolkit</span>.</h2>
+
+    <div class="stack-grid">
+      <div class="stack-cat">
+        <div class="stack-cat-title">Cloud Platforms <span class="count">/03</span></div>
+        <div class="stack-items">
+          <span class="stack-item primary">AWS</span>
+          <span class="stack-item primary">GCP</span>
+          <span class="stack-item primary">Azure</span>
+          <span class="stack-item">EC2</span>
+          <span class="stack-item">S3</span>
+          <span class="stack-item">Glue</span>
+          <span class="stack-item">Lambda</span>
+          <span class="stack-item">RDS</span>
+          <span class="stack-item">BigQuery</span>
+          <span class="stack-item">Dataproc</span>
+          <span class="stack-item">Cloud Composer</span>
+          <span class="stack-item">ADF</span>
+          <span class="stack-item">Synapse</span>
+          <span class="stack-item">Data Lake</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title">Big Data &amp; Streaming <span class="count">/10</span></div>
+        <div class="stack-items">
+          <span class="stack-item primary">Spark</span>
+          <span class="stack-item primary">PySpark</span>
+          <span class="stack-item primary">Kafka</span>
+          <span class="stack-item">Hadoop</span>
+          <span class="stack-item">HDFS</span>
+          <span class="stack-item">Hive</span>
+          <span class="stack-item">MapReduce</span>
+          <span class="stack-item">Sqoop</span>
+          <span class="stack-item">Airflow</span>
+          <span class="stack-item">Oozie</span>
+          <span class="stack-item">Flume</span>
+          <span class="stack-item">NiFi</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title">Languages <span class="count">/07</span></div>
+        <div class="stack-items">
+          <span class="stack-item primary">Python</span>
+          <span class="stack-item primary">SQL</span>
+          <span class="stack-item primary">Scala</span>
+          <span class="stack-item">Java</span>
+          <span class="stack-item">PL/SQL</span>
+          <span class="stack-item">R</span>
+          <span class="stack-item">Shell</span>
+          <span class="stack-item">JSON</span>
+          <span class="stack-item">XML</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title">Data Warehousing &amp; Modeling <span class="count">/06</span></div>
+        <div class="stack-items">
+          <span class="stack-item primary">Snowflake</span>
+          <span class="stack-item primary">dbt</span>
+          <span class="stack-item">Redshift</span>
+          <span class="stack-item">Star Schema</span>
+          <span class="stack-item">Snowflake Schema</span>
+          <span class="stack-item">3NF Modeling</span>
+          <span class="stack-item">CDC</span>
+          <span class="stack-item">ODS/OLTP</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title">Databases <span class="count">/07</span></div>
+        <div class="stack-items">
+          <span class="stack-item">Oracle</span>
+          <span class="stack-item">SQL Server</span>
+          <span class="stack-item">MySQL</span>
+          <span class="stack-item">PostgreSQL</span>
+          <span class="stack-item">Teradata</span>
+          <span class="stack-item">HBase</span>
+          <span class="stack-item">Cassandra</span>
+          <span class="stack-item">DynamoDB</span>
+          <span class="stack-item">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title">DevOps &amp; Infrastructure <span class="count">/06</span></div>
+        <div class="stack-items">
+          <span class="stack-item primary">Terraform</span>
+          <span class="stack-item primary">Docker</span>
+          <span class="stack-item primary">Kubernetes</span>
+          <span class="stack-item">CloudFormation</span>
+          <span class="stack-item">Jenkins</span>
+          <span class="stack-item">GitHub Actions</span>
+          <span class="stack-item">CI/CD</span>
+          <span class="stack-item">Nexus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREDS ============ -->
+<section id="creds">
+  <div class="container">
+    <div class="section-label">05 · Credentials</div>
+    <h2 class="section-title">Certified &amp; <span class="italic">credentialed</span>.</h2>
+    <div class="creds-grid">
+      <div class="cred-card">
+        <div class="cred-type">Certification</div>
+        <div class="cred-title">SnowPro Core Certification</div>
+        <div class="cred-issuer">Snowflake</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-type">Certification</div>
+        <div class="cred-title">AWS Certified Solutions Architect — Associate</div>
+        <div class="cred-issuer">Amazon Web Services</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-type">Education</div>
+        <div class="cred-title">M.S. — University of Central Missouri</div>
+        <div class="cred-issuer">GPA · 3.5 / 4.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-label" style="justify-content: center;">06 · Get in touch</div>
+    <h2>Let's build something <span class="italic">that scales</span>.</h2>
+    <p class="contact-sub">Open to senior data-engineering and platform roles. If you're hiring for cloud modernization, real-time analytics, or ML data infrastructure — I'd love to talk.</p>
+    <div class="contact-links">
+      <a href="mailto:ksivakalyan2@gmail.com" class="contact-link primary">
+        ksivakalyan2@gmail.com ↗
+      </a>
+      <a href="tel:+19137355419" class="contact-link">
+        +1 (913) 735-5419
+      </a>
+      <a href="#" class="contact-link">
+        LinkedIn ↗
+      </a>
+    </div>
+    <footer>
+      <div>© 2026 Siva Kalyan — Senior Data Engineer</div>
+      <div>Designed &amp; built end-to-end</div>
+    </footer>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id], header[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+</script>
+
+</body>
+</html>
