@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Question For You 💌</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fff0f5 0%, #fce4f0 50%, #f8d7ea 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .screen {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .screen.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(255, 180, 210, 0.45);
+      text-align: center;
+      box-shadow: 0 8px 48px rgba(220, 100, 150, 0.13);
+    }
+
+    /* Step dots */
+    .step-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 1.75rem;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #f0c0d8;
+      transition: all 0.35s;
+    }
+    .dot.active { background: #e91e8c; width: 22px; border-radius: 4px; }
+
+    /* Avatar */
+    .avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      border: 3px solid rgba(244, 143, 177, 0.4);
+    }
+
+    .big-icon { font-size: 2.4rem; display: block; margin-bottom: 0.75rem; }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #999;
+      margin-bottom: 2rem;
+      font-family: sans-serif;
+    }
+
+    /* Yes button */
+    .btn-yes {
+      background: linear-gradient(135deg, #e91e8c, #c2185b);
+      color: white;
+      border: none;
+      padding: 1rem 2.8rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: sans-serif;
+      box-shadow: 0 4px 20px rgba(233, 30, 140, 0.38);
+      margin: 0.5rem;
+    }
+    .btn-yes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(233, 30, 140, 0.48);
+    }
+
+    /* No button — floats away */
+    #no-btn {
+      background: white;
+      color: #aaa;
+      border: 1.5px solid #ddd;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: sans-serif;
+      position: absolute;
+      white-space: nowrap;
+      transition: opacity 0.3s, font-size 0.3s;
+    }
+
+    /* Button wrapper for the floating zone */
+    .btn-wrapper {
+      position: relative;
+      min-height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Date / time inputs */
+    .form-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      color: #c2185b;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.4rem;
+      font-family: sans-serif;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #f0c0d8;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: sans-serif;
+      background: rgba(255, 255, 255, 0.8);
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus { border-color: #e91e8c; }
+
+    /* Food grid */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+    .food-item {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: sans-serif;
+      user-select: none;
+    }
+    .food-item:hover  { transform: scale(1.06); }
+    .food-item.selected {
+      border-color: #e91e8c;
+      background: rgba(233, 30, 140, 0.08);
+    }
+    .food-emoji { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+    .food-name  { font-size: 0.78rem; font-weight: 600; color: #555; }
+
+    /* Next / confirm button */
+    .btn-next {
+      background: linear-gradient(135deg, #e91e8c, #c2185b);
+      color: white;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: sans-serif;
+      box-shadow: 0 4px 18px rgba(233, 30, 140, 0.3);
+      margin-top: 0.75rem;
+      width: 100%;
+    }
+    .btn-next:hover    { transform: scale(1.03); }
+    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* Confirmation card */
+    .confirm-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      text-align: left;
+      border: 1px solid rgba(233, 30, 140, 0.15);
+    }
+    .confirm-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(240, 192, 216, 0.3);
+      font-family: sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-icon  { font-size: 1.3rem; flex-shrink: 0; }
+    .confirm-label { color: #c2185b; font-size: 0.75rem; font-weight: 600; display: block; }
+
+    /* Final check animation */
+    .big-check {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: pop 0.6s ease;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    /* Floating hearts overlay */
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 999;
+    }
+    .fh {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: floatUp 3s ease-in forwards;
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(-220px) rotate(20deg); }
+    }
+
+    .ps-note {
+      font-size: 0.85rem;
+      color: #bbb;
+      font-family: sans-serif;
+      margin-top: 1.25rem;
+      font-style: italic;
+    }
+
+    .ending-hearts {
+      margin-top: 1.5rem;
+      font-size: 1.5rem;
+      letter-spacing: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="floating-hearts" class="floating-hearts"></div>
+
+<div id="app">
+
+  <!-- SCREEN 1: Will you go on a date? -->
+  <div id="screen1" class="screen active">
+    <div class="card">
+      <div class="step-dots">
+        <div class="dot active"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="avatar">🌸</div>
+      <h1>Will you go on a date with me?</h1>
+      <p class="subtitle">I promise it'll be the best decision you make today ✨</p>
+      <div class="btn-wrapper" id="btn-area">
+        <button class="btn-yes" onclick="sayYes()">Yes, absolutely! 💕</button>
+        <button id="no-btn" onclick="noClicked()">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Pick a date & time -->
+  <div id="screen2" class="screen">
+    <div class="card">
+      <div class="step-dots">
+        <div class="dot"></div><div class="dot active"></div>
+        <div class="dot"></div><div class="dot"></div>
+      </div>
+      <span class="big-icon">🥰</span>
+      <h1>Knew it! 🎉</h1>
+      <p class="subtitle">When are you free? Pick a date and time for us 💞</p>
+      <div class="form-group">
+        <label>📅 Pick a date</label>
+        <input type="date" id="date-input" />
+      </div>
+      <div class="form-group">
+        <label>⏰ What time works for you?</label>
+        <input type="time" id="time-input" />
+      </div>
+      <button class="btn-next" id="btn-datetime" onclick="goToFood()" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Food picker -->
+  <div id="screen3" class="screen">
+    <div class="card">
+      <div class="step-dots">
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot active"></div><div class="dot"></div>
+      </div>
+      <span class="big-icon">🍽️</span>
+      <h1>What are we feeling?</h1>
+      <p class="subtitle">Pick whatever sounds good to you ✨</p>
+      <div class="food-grid">
+        <div class="food-item" onclick="selectFood(this,'Pizza 🍕')">
+          <span class="food-emoji">🍕</span><span class="food-name">Pizza</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Sushi 🍣')">
+          <span class="food-emoji">🍣</span><span class="food-name">Sushi</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Burgers 🍔')">
+          <span class="food-emoji">🍔</span><span class="food-name">Burgers</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Pasta 🍝')">
+          <span class="food-emoji">🍝</span><span class="food-name">Pasta</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Tacos 🌮')">
+          <span class="food-emoji">🌮</span><span class="food-name">Tacos</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Ramen 🍜')">
+          <span class="food-emoji">🍜</span><span class="food-name">Ramen</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Biryani 🍛')">
+          <span class="food-emoji">🍛</span><span class="food-name">Biryani</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Chicken Biryani 🍗🍛')">
+          <span class="food-emoji">🍗</span><span class="food-name">Chicken Biryani</span>
+        </div>
+        <div class="food-item" onclick="selectFood(this,'Anything with you 🥰')">
+          <span class="food-emoji">🥰</span><span class="food-name">Surprise me</span>
+        </div>
+      </div>
+      <button class="btn-next" id="btn-food" onclick="goToConfirm()" disabled>Confirm →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: It's a date! -->
+  <div id="screen4" class="screen">
+    <div class="card">
+      <div class="step-dots">
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot active"></div>
+      </div>
+      <span class="big-check">💖</span>
+      <h1>It's a date!</h1>
+      <p class="subtitle">Can't wait to see you. Here's what we planned 🥹</p>
+      <div class="confirm-card">
+        <div class="confirm-row">
+          <span class="confirm-icon">📅</span>
+          <div><span class="confirm-label">Date</span><span id="confirm-date">—</span></div>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-icon">⏰</span>
+          <div><span class="confirm-label">Time</span><span id="confirm-time">—</span></div>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-icon">🍽️</span>
+          <div><span class="confirm-label">We're eating</span><span id="confirm-food">—</span></div>
+        </div>
+      </div>
+      <p class="ps-note">P.S. I built this for you during my lunch break. No big deal 😏</p>
+      <p id="email-status" style="font-size:0.82rem;font-family:sans-serif;margin-top:0.75rem;min-height:1.2em;"></p>
+      <div class="ending-hearts">💕💕💕</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let noClicks = 0;
+  let selectedFood = null;
+  let dateVal = null;
+  let timeVal = null;
+
+  function sayYes() {
+    launchHearts();
+    setTimeout(() => showScreen('screen2'), 450);
+  }
+
+  function noClicked() {
+    noClicks++;
+    const btn = document.getElementById('no-btn');
+    const area = document.getElementById('btn-area');
+    const maxX = area.offsetWidth  - btn.offsetWidth  - 16;
+    const maxY = area.offsetHeight - btn.offsetHeight - 8;
+    btn.style.left = Math.max(0, Math.random() * maxX) + 'px';
+    btn.style.top  = Math.max(0, Math.random() * maxY) + 'px';
+    const jokes = ['Nope! 😂', 'Try again 😏', 'Nice try!', 'Nuh uh 🙈', "Can't catch me!", 'Think again 💅'];
+    btn.textContent = jokes[noClicks % jokes.length];
+    if (noClicks >= 4) {
+      btn.style.opacity  = '0.25';
+      btn.style.fontSize = '0.65rem';
+      btn.style.padding  = '0.4rem 0.8rem';
+    }
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('date-input').addEventListener('change', checkDateTime);
+  document.getElementById('time-input').addEventListener('change', checkDateTime);
+
+  function checkDateTime() {
+    dateVal = document.getElementById('date-input').value;
+    timeVal = document.getElementById('time-input').value;
+    document.getElementById('btn-datetime').disabled = !(dateVal && timeVal);
+  }
+
+  function goToFood() { showScreen('screen3'); }
+
+  function selectFood(el, name) {
+    document.querySelectorAll('.food-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedFood = name;
+    document.getElementById('btn-food').disabled = false;
+  }
+
+  // ── EmailJS config ── fill in your own keys from emailjs.com ──
+  const EMAILJS_PUBLIC_KEY  = 'oEKPIkvlSLJOlWzdr';
+  const EMAILJS_SERVICE_ID  = 'service_ac4b536';
+  const EMAILJS_TEMPLATE_ID = 'tagrsbh';
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+  function goToConfirm() {
+    const d = new Date(dateVal + 'T00:00:00');
+    const dateStr = d.toLocaleDateString('en-US', {
+      weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+    });
+    const [h, m] = timeVal.split(':');
+    const hour = parseInt(h, 10);
+    const timeStr = (hour % 12 || 12) + ':' + m + ' ' + (hour >= 12 ? 'PM' : 'AM');
+
+    document.getElementById('confirm-date').textContent = dateStr;
+    document.getElementById('confirm-time').textContent = timeStr;
+    document.getElementById('confirm-food').textContent = selectedFood;
+
+    launchHearts();
+    setTimeout(() => showScreen('screen4'), 500);
+
+    // Send email notification
+    sendEmailNotification(dateStr, timeStr, selectedFood);
+  }
+
+  function sendEmailNotification(dateStr, timeStr, food) {
+    const statusEl = document.getElementById('email-status');
+    statusEl.textContent = '📨 Sending you the details...';
+    statusEl.style.color = '#aaa';
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email  : 'sivakalyan307@gmail.com',
+      date      : dateStr,
+      time      : timeStr,
+      food      : food,
+      subject   : "She said YES! 💖 Date confirmed",
+    })
+    .then(() => {
+      statusEl.textContent = '✅ Confirmation sent to your email!';
+      statusEl.style.color = '#27ae60';
+    })
+    .catch(() => {
+      statusEl.textContent = '⚠️ Email failed — check your EmailJS keys.';
+      statusEl.style.color = '#e74c3c';
+    });
+  }
+
+  function launchHearts() {
+    const container = document.getElementById('floating-hearts');
+    const hearts = ['💕','💖','💗','💓','🌸','✨','🥰'];
+    for (let i = 0; i < 14; i++) {
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'fh';
+        el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        el.style.left = Math.random() * 90 + '%';
+        el.style.bottom = '0';
+        el.style.animationDuration = (2 + Math.random() * 2) + 's';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+      }, i * 80);
+    }
+  }
+</script>
+
+</body>
+</html>
